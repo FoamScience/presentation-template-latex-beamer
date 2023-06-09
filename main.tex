@@ -1,0 +1,238 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+
+\usetheme[sectionpage=none,numbering=fraction]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=newest}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\title{\hspace{\linewidth}\\Lorem ipsum dolor sit amet,\\ consectetur adipiscing elit,\\ sed do eiusmod temp}
+\subtitle{CONFERENCE 2023}
+\date{June 05, 2023}
+\author{{\bf Author1 }\textsuperscript{1,2}, Author2\textsuperscript{1}, Author3\textsuperscript{1}, Author4\textsuperscript{1}, Author5\textsuperscript{2}}
+\institute{
+    \textsuperscript{1} Affiliation 1 \\
+    \textsuperscript{2} Affiliation 2 \\
+    Notes..
+}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\definecolor{mDarkBrown}{HTML}{604c38}
+\definecolor{mDarkTeal}{HTML}{0F1833}
+\definecolor{mLightBrown}{HTML}{EB811B}
+\definecolor{mLightGreen}{HTML}{14B03D}
+\colorlet{mBg}{black!2}
+
+\usepackage{amsmath, amsfonts}
+\usepackage{multicol}
+\usepackage{fixltx2e}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{arrows.meta, calc, tikzmark, shapes.geometric, positioning, automata, patterns}
+\usepackage{setspace}
+\usepackage{stmaryrd}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{listings}
+\tcbuselibrary{minted}
+\usepackage{pgfplots}
+
+\newenvironment{CodeEnv}[4][]
+{\tcbset{mytcboptions/.style={title=#1}}%
+    \tcblisting{
+    listing only,width=\linewidth,colback=white,colframe=mDarkTeal,
+    arc=0pt,outer arc=0pt,top=1mm,bottom=1mm,left=1mm,right=1mm,
+    listing outside comment,righthand width=2.5cm,comment={#3},
+    boxrule=0.6pt,listing engine=minted,minted language=#2,mytcboptions,minted options={fontsize=#4,escapeinside=??}%
+}
+}{%
+\endtcblisting%
+}
+
+\newenvironment{CodeEnvNoComment}[3][]
+{\tcbset{mytcboptions/.style={title=#1}}%
+    \tcblisting{
+    listing only,width=\linewidth,colback=white,colframe=mDarkTeal,
+    arc=0pt,outer arc=0pt,top=1mm,bottom=1mm,left=1mm,right=1mm,
+    boxrule=0.6pt,listing engine=minted,minted language=#2,mytcboptions,minted options={fontsize=#3,escapeinside=??}%
+}
+}{%
+\endtcblisting%
+}
+
+
+\tikzset{
+  frame/.style={
+    rectangle, draw, 
+    text width=6em, text centered,
+    minimum height=2.5em,fill=mDarkTeal, text = white, inner sep=0mm,
+  },
+  line/.style={
+    draw, -latex',rounded corners=3mm,
+  }
+}
+
+\newcommand{\DrawBox}[5]{% lx, ly, dx, dy, dz
+        \def\lx{#1}
+        \def\ly{#2}
+        \def\dx{#3}
+        \def\dy{#4}
+        \def\dxplx{\lx+\dx}
+        \def\offset{.25}
+        \def\dyply{\ly+\dy}
+        \draw[cube,fill=black!2] (\dx,\dy,#5) -- (\dx,\dyply,#5) -- (\dxplx,\dyply,#5) -- (\dxplx,\dy,#5) -- cycle;
+        \draw[cube,fill=black!2] (\dxplx,\dy,#5) -- (\dxplx,\dy,0) -- (\dxplx,\dyply,0) -- (\dxplx,\dyply,#5) -- cycle;
+        \draw[cube,fill=black!2] (\dxplx,\dyply,#5) -- (\dxplx,\dyply,0) -- (\dx,\dyply,0) -- (\dx,\dyply,#5) -- cycle;
+        \pgfmathsetmacro{\xlo}{\dx+\offset}
+        \pgfmathsetmacro{\xfs}{\dx+\offset+\offset}
+        \pgfmathsetmacro{\xhi}{\lx+\dx}
+        \pgfmathsetmacro{\ylo}{\dy+\offset}
+        \pgfmathsetmacro{\yfs}{\dy+\offset+\offset}
+        \pgfmathsetmacro{\yhi}{\ly+\dy}
+        \foreach \x in {\xlo,\xfs,...,\xhi}
+        	\foreach \y in {\ylo,\yfs,...,\yhi}
+        	{
+        		\draw[grid] (\x,\dy,#5) -- (\x,\yhi,#5);
+        		\draw[grid] (\dx,\y,#5) -- (\xhi,\y,#5);
+        	}
+
+        \foreach \x in {\xlo,\xfs,...,\xhi}
+        	\foreach \z in {0.25,0.5,...,1.75}
+        	{
+        		\draw[grid] (\x,\yhi,0) -- (\x,\yhi,2);
+        		\draw[grid] (\dx,\yhi,\z) -- (\xhi,\yhi,\z);
+        	}
+
+        \foreach \y in {\ylo,\yfs,...,\yhi}
+        	\foreach \z in {0.25,0.5,...,1.75}
+        	{
+        		\draw[grid] (\xhi,\y,0) -- (\xhi,\y,2);
+        		\draw[grid] (\xhi,\dy,\z) -- (\xhi,\yhi,\z);
+        	}
+
+}
+
+\titlegraphic{\begin{flushright}\vspace{.8cm}\includegraphics[width=.45\textwidth]{images/logo.png}\end{flushright}}
+\setbeamerfont{page number in head/foot}{size=\tiny}
+\setbeamercolor{footline}{fg=gray}
+\setbeamertemplate{frame footer}{\includegraphics[height=0.5cm]{images/logo-footer.png}}
+
+\usepackage[doi=true,style=numeric]{biblatex}
+  \nocite{*}
+  \setbeamertemplate{bibliography item}[text]
+  \addbibresource{main.bib}
+
+\setlength{\abovecaptionskip}{2pt}
+
+\usepackage[icon=Help]{pdfcomment}
+\usepackage[np, autolanguage]{numprint}
+%%%% for frequency and decay factor table
+\usepackage{multirow} 
+\usepackage{array} 
+\usepackage{float} 
+%%%%%
+
+\ExplSyntaxOn
+\NewDocumentCommand{\extractfirst}{mm}
+{
+ 	\tl_set:Nx #1 {\clist_item:Nn #2 { 1 } }
+}
+\NewDocumentCommand{\extractlast}{mm}
+{
+ 	\tl_set:Nx #1 {\clist_item:Nn #2 { -1 } }
+}
+\NewDocumentCommand{\computelength}{mm}
+{
+    \tl_set:Nx #1 {\tl_length:n {#2} }
+}
+\ExplSyntaxOff
+\pgfplotsset{
+    % define the custom colormap
+    colormap={my colormap}{
+        rgb255=(15,24,51),
+        rgb255=(0,188,212),
+        %rgb255=(23,17,61),
+        %rgb255=(46,19,72),
+        %rgb255=(75,20,82),
+        %rgb255=(93,22,75),
+        %rgb255=(103,23,52),
+        %rgb255=(113,24,23),
+        %rgb255=(124,62,23),
+        %rgb255=(134,108,23),
+        %rgb255=(128,145,23),
+        %rgb255=(87,155,22),
+        %rgb255=(38,166,21),
+        rgb255=(20,176,61)
+    },
+}
+\usepackage{siunitx}
+\newcommand{\round}[2]{\num[round-mode=places,round-precision=#1]{#2}}
+\nprounddigits{2}
+
+\tikzset{%
+    bold-fg/.style={black,thick},%
+    ref1-fg/.style={black},%
+    ref2-fg/.style={black,thin},%
+    bold-bg/.style={black!50,thick,loosely dashed},%
+    ref1-bg/.style={black!50,loosely dashed},%
+    ref2-bg/.style={black!50,thin,loosely dashed},%
+    lvl0/.style={circle,minimum size=3pt,inner sep=0pt,outer sep=0pt,fill=blue},%
+    lvl1/.style={circle,minimum size=2.5pt,inner sep=0pt,outer sep=0pt,fill=red},%
+    lvl2/.style={circle,minimum size=2pt,inner sep=0pt,outer sep=0pt,fill=orange},%
+    centroid/.style={rectangle,minimum size=2.5pt,inner sep=0pt,outer sep=0pt,fill=red}%
+}
+
+\usepackage{pgfplotstable}
+
+\begin{document}
+\maketitle
+
+{
+\AtBeginSection{}
+}
+
+
+\begin{frame}{Table of contents}
+    \begin{minipage}[t][0.5\textheight]{0.5\textwidth}
+    \vspace{0pt} 
+    \setbeamertemplate{section in toc}[sections numbered]
+    \setbeamertemplate{subsection in toc}[subsections numbered]
+    \tableofcontents
+    \end{minipage}
+    \begin{minipage}[t]{0.49\textwidth}
+    \vspace{0pt} 
+    \begin{tikzpicture}[remember picture, overlay,every node/.style={inner sep=0,outer sep=0}]%
+        \node[anchor=north east] at (current page.north east) {\includegraphics[width=0.9\textwidth,keepaspectratio]{images/front.png}};%
+    \end{tikzpicture}
+    \end{minipage}
+\end{frame}
+
+\input{slides/intro.tex}
+% input more slides here
+
+
+\setbeamertemplate{frame footer}{}
+
+\begin{frame}[standout]
+  Thank you!
+  \\
+  Questions?
+  \begin{center}
+      \includegraphics[width=.3\textwidth]{images/mail-qr.png}
+  \end{center}
+\end{frame}
+
+\appendix
+
+\setbeamertemplate{frame footer}{\includegraphics[height=0.5cm]{images/logo-footer.png}}
+
+\begin{frame}[allowframebreaks]{Sources and further reading}
+\printbibliography[heading=none]
+\end{frame}
+\end{document}
